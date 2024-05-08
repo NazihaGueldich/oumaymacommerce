@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ArticlesController;
+
+use App\Http\Controllers\AuthController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,4 +36,15 @@ Route::middleware('api')->group(function () {
     Route::get('articles_archivee', [ArticlesController::class, 'indexarchiv'])->name('articles.archive');
     Route::get('articles_archive', [ArticlesController::class, 'archive'])->name('article.archive');
 
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
